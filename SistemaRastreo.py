@@ -21,17 +21,16 @@ app.secret_key = 'jhostyn2022'
 # este es el controlador donde me permite ingresar los registros del cliente 
 @app.route('/')
 # llamar a index.html en la ruta principal
-def panelPrincipal():
-    return render_template('/Principal', RegistrosCliente=RegistrosCliente)
+def panelPrincipalC():
+    return render_template('/Principal.html', RegistrosCliente=RegistrosCliente)
 
 # ---------------------------------------------------------------------------
-# Este es el segundo paso para enviar datos a nuestra lista mediante el formulario dado.
+# Este es el segundo paso para enviar datos a nuestra el Registro mediante el formulario dado.
 # Controlador de envio.
 
-
-@app.route('/enviar', methods=['POST'])
+@app.route('/enviarRegistroClientes', methods=['POST'])
 # metodo de guardar los datos
-def enviar():  # Aqui realiza el envio de datos para ser guardados en la lista.
+def enviarRegistroClientes():  # Aqui realiza el envio de datos para ser guardados en la lista.
     if request.method == 'POST':
         # el mensaje de añadir un registro de un nuevo dato se muestra por codigo javascript en el html
         Registro_Nombre = request.form['Registro_Nombre']
@@ -40,30 +39,30 @@ def enviar():  # Aqui realiza el envio de datos para ser guardados en la lista.
 
         # El mensaje esta por codigo javascript dentro del HTML
         if Registro_Nombre == '' or Registro_Telefono == '' or Registro_Estado == '':
-            return redirect(url_for('panelPrincipal'))
+            return redirect(url_for('panelPrincipalC'))
         else:
             RegistrosCliente.append(
                 {'Registro_Nombre': Registro_Nombre,
                  'Registro_Telefono': Registro_Telefono,
                  'Registro_Estado': Registro_Estado})
 
-            return redirect(url_for('panelPrincipal'))
+            return redirect(url_for('panelPrincipalC'))
 
 
 # ---------------------------------------------------------------------------
 # Controlador de la ruta para borrar todos los datos encontrados del registro 
-# Controlador de borrar registros
-@app.route('/borrar', methods=['POST'])
-def borrar():              # La funcion de envio de mensaje borrado se hace mediante codigo Javascript
+# Controlador de borrar registros del cliente
+@app.route('/borrarRegistroClientes', methods=['POST'])
+def borrarRegistroClientes():              # La funcion de envio de mensaje borrado se hace mediante codigo Javascript
     RegistrosCliente.clear()
-    return redirect(url_for('panelPrincipal'))
+    return redirect(url_for('panelPrincipalC'))
 
 
 # ---------------------------------------------------------------------------
 # Controlador de registrar los de la tienda 
 
 
-# ejecutar del main principal de la pagina To DO local host
+# ejecutar del main principal para nuestra pagina 
 if __name__ == '__main__':
 
     app.run(debug=True)
